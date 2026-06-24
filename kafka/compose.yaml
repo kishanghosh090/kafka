@@ -13,12 +13,20 @@ services:
 
       # Define listeners
       KAFKA_LISTENERS: "CLIENT://0.0.0.0:9092,INTERNAL://0.0.0.0:29092,CONTROLLER://0.0.0.0:29093"
+
+      # FIX 1: Change localhost mapping format or explicitly bound external IP
       KAFKA_ADVERTISED_LISTENERS: "CLIENT://135.235.136.136:9092,INTERNAL://kafka:29092"
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: "CLIENT:PLAINTEXT,INTERNAL:PLAINTEXT,CONTROLLER:PLAINTEXT"
       KAFKA_CONTROLLER_LISTENER_NAMES: "CONTROLLER"
 
-      # FIX: Explicitly assign the inter-broker listener role
+      # FIX 2: Ensure inter-broker communication uses INTERNAL
       KAFKA_INTER_BROKER_LISTENER_NAME: "INTERNAL"
+
+      # FIX 3: Force the metadata log to prioritize the external-facing listener map
+      # This prevents metadata coordinator routing from getting stuck in the internal docker network.
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
+      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
 
       KAFKA_LOG_DIRS: "/tmp/kraft-combined-logs"
       CLUSTER_ID: "MkU3OEVBNTcwNTJENDM2Qk"
