@@ -32,12 +32,24 @@ function getNumber(call: any) {
   }, 1000);
 }
 
+function sumNumbers(call: any, callback: any) {
+  let sum = 0;
+  call.on("data", (data: any) => {
+    sum += data.num;
+  });
+
+  call.on("end", () => {
+    callback(null, { sum });
+  });
+}
+
 function main() {
   const server = new grpc.Server();
 
   server.addService(proto!!.GreeterService!!.service!!, {
     sayHello: sayHello,
     getNumber: getNumber,
+    sumNumbers: sumNumbers,
   });
   server.bindAsync(
     "0.0.0.0:5050",

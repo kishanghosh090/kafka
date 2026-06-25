@@ -6,6 +6,7 @@ package greeter;
 service GreeterService {
   rpc SayHello(HelloRequest) returns (HelloResponse);
   rpc GetNumber(NumberRequest) returns (stream NumberResponse);
+  rpc SumNumbers( stream SumRequest) returns (SumResponse);
 }
 
 
@@ -28,3 +29,11 @@ message NumberResponse {
   int32 order = 1;
   int32 number = 2;
 }
+message SumRequest {
+  int32 num = 1;
+}
+
+message SumResponse {
+  int32 sum = 1;
+}
+
