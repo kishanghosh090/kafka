@@ -29,7 +29,7 @@ function getNumbers(call: any) {
       call.end();
       return;
     }
-    call.wirte({ order: current, number: count * 100 });
+    call.write({ order: current, number: current * 100 });
     current++;
   }, 1000);
 }

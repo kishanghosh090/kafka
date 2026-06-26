@@ -23,5 +23,14 @@ function main() {
   //   }
   //   console.log(res);
   // });
+
+  const call = client.GetNumbers({ num: 10 });
+  call.on("data", (res: any) => {
+    console.log(res);
+  });
+
+  call.on("end", () => {
+    console.log("Stream ended...");
+  });
 }
 main();
