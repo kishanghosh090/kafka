@@ -16,12 +16,12 @@ function main() {
     grpc.credentials.createInsecure(),
   );
 
-  client.SayHello({ name: "kishan", age: 20 }, (err: any, res: any) => {
-    if (err) {
-      console.log(err);
-      return;
-    }
-    console.log(res);
-  });
+  // client.SayHello({ name: "kishan", age: 20 }, (err: any, res: any) => {
+  //   if (err) {
+  //     console.log(err);
+  //     return;
+  //   }
+  //   console.log(res);
+  // });
 }
 main();

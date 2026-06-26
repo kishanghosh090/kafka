@@ -18,11 +18,28 @@ function sayHello(call: any, callback: any) {
   callback(null, response);
 }
 
+function getNumbers(call: any) {
+  const count = call.request.num;
+
+  let current = 1;
+
+  const interval = setInterval(() => {
+    if (current > count) {
+      clearInterval(interval);
+      call.end();
+      return;
+    }
+    call.wirte({ order: current, number: count * 100 });
+    current++;
+  }, 1000);
+}
+
 function main() {
   const server = new grpc.Server();
 
   server.addService(proto!!.GreetService!!.service, {
     SayHello: sayHello,
+    GetNumbers: getNumbers,
   });
 
   server.bindAsync(
